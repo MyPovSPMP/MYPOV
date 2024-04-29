@@ -1,291 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Opinion Website</title>
-    <style>
-        /* Basic Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #000;
-            color: #fff;
-        }
-
-        header {
-            background-color: #000;
-            color: #ff69b4;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 5px solid #ff69b4;
-        }
-
-        nav ul {
-            list-style-type: none;
-        }
-
-        nav ul li {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        nav ul li a {
-            color: #ff69b4;
-            text-decoration: none;
-        }
-
-        main {
-            padding: 20px;
-        }
-
-        section {
-            margin-bottom: 30px;
-            background-color: #111;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(255, 105, 180, 0.3);
-        }
-
-        h2 {
-            color: #ff69b4;
-            margin-bottom: 10px;
-        }
-
-        .comments {
-            margin-top: 20px;
-        }
-
-        .comment {
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-
-        .comment p {
-            margin-bottom: 5px;
-        }
-
-        .comment-form textarea {
-            width: calc(100% - 40px);
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        .comment-form button {
-            padding: 8px 20px;
-            background-color: #ff69b4;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        .edit-button {
-            background-color: #ff69b4;
-            color: #fff;
-            border: none;
-            padding: 8px 20px;
-            margin-top: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .edit-button:hover {
-            background-color: #ff5eaa;
-        }
-
-        .part-buttons {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .part-button {
-            background-color: #ff69b4;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            margin-right: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .part-button:hover {
-            background-color: #ff5eaa;
-        }
-
-        footer {
-            background-color: #000;
-            color: #ff69b4;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            border-top: 5px solid #ff69b4;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opinions Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+    }
+    header {
+      background-color: #ff69b4;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 20px;
+    }
+    nav a:hover {
+      background-color: #ff1493;
+    }
+    section {
+      padding: 20px;
+    }
+    .comments {
+      margin-top: 20px;
+    }
+    .comment {
+      background-color: #333;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .edit-button {
+      background-color: #ff69b4;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Your Opinion</h1>
-        <nav>
-            <ul>
-                <li><a href="#studies">Studies</a></li>
-                <li><a href="#philosophy">Philosophy</a></li>
-                <li><a href="#money">Money</a></li>
-                <li><a href="#power">Power</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <main>
-        <div class="part-buttons">
-            <button class="part-button" onclick="scrollToPart('studies')">Studies</button>
-            <button class="part-button" onclick="scrollToPart('philosophy')">Philosophy</button>
-            <button class="part-button" onclick="scrollToPart('money')">Money</button>
-            <button class="part-button" onclick="scrollToPart('power')">Power</button>
-        </div>
+  <header>
+    <h1>Opinions Website</h1>
+    <nav>
+      <a href="#studies">Studies</a>
+      <a href="#philosophy">Philosophy</a>
+      <a href="#money">Money</a>
+      <a href="#power">Power</a>
+    </nav>
+  </header>
 
-        <section id="studies">
-            <h2>Studies</h2>
-            <!-- Content for Studies -->
-            <p id="studiesContent">Hi</p>
-            <button class="edit-button" onclick="editContent('studies')">Edit</button>
-            <div class="comments" id="studiesComments">
-                <h3>Comments</h3>
-                <!-- Comments will be displayed here -->
-            </div>
-            <form class="comment-form" onsubmit="addComment('studies'); return false;">
-                <textarea id="studiesCommentInput" placeholder="Add your comment..."></textarea>
-                <button type="submit">Add Comment</button>
-            </form>
-        </section>
+  <section id="studies">
+    <h2>Studies</h2>
+    <p id="studies-content"></p>
+    <div class="comments">
+      <h3>Comments</h3>
+      <textarea id="studies-comment"></textarea>
+      <button onclick="addComment('studies')">Add Comment</button>
+      <div id="studies-comments"></div>
+    </div>
+    <button class="edit-button" onclick="editContent('studies')">Edit</button>
+  </section>
 
-        <section id="philosophy">
-            <h2>Philosophy</h2>
-            <!-- Content for Philosophy -->
-            <p id="philosophyContent">Hi</p>
-            <button class="edit-button" onclick="editContent('philosophy')">Edit</button>
-            <div class="comments" id="philosophyComments">
-                <h3>Comments</h3>
-                <!-- Comments will be displayed here -->
-            </div>
-            <form class="comment-form" onsubmit="addComment('philosophy'); return false;">
-                <textarea id="philosophyCommentInput" placeholder="Add your comment..."></textarea>
-                <button type="submit">Add Comment</button>
-            </form>
-        </section>
+  <section id="philosophy">
+    <h2>Philosophy</h2>
+    <p id="philosophy-content"></p>
+    <div class="comments">
+      <h3>Comments</h3>
+      <textarea id="philosophy-comment"></textarea>
+      <button onclick="addComment('philosophy')">Add Comment</button>
+      <div id="philosophy-comments"></div>
+    </div>
+    <button class="edit-button" onclick="editContent('philosophy')">Edit</button>
+  </section>
 
-        <section id="money">
-            <h2>Money</h2>
-            <!-- Content for Money -->
-            <p id="moneyContent">Hi</p>
-            <button class="edit-button" onclick="editContent('money')">Edit</button>
-            <div class="comments" id="moneyComments">
-                <h3>Comments</h3>
-                <!-- Comments will be displayed here -->
-            </div>
-            <form class="comment-form" onsubmit="addComment('money'); return false;">
-                <textarea id="moneyCommentInput" placeholder="Add your comment..."></textarea>
-                <button type="submit">Add Comment</button>
-            </form>
-        </section>
+  <section id="money">
+    <h2>Money</h2>
+    <p id="money-content"></p>
+    <div class="comments">
+      <h3>Comments</h3>
+      <textarea id="money-comment"></textarea>
+      <button onclick="addComment('money')">Add Comment</button>
+      <div id="money-comments"></div>
+    </div>
+    <button class="edit-button" onclick="editContent('money')">Edit</button>
+  </section>
 
-        <section id="power">
-            <h2>Power</h2>
-            <!-- Content for Power -->
-            <p id="powerContent">Hi</p>
-            <button class="edit-button" onclick="editContent('power')">Edit</button>
-            <div class="comments" id="powerComments">
-                <h3>Comments</h3>
-                <!-- Comments will be displayed here -->
-            </div>
-            <form class="comment-form" onsubmit="addComment('power'); return false;">
-                <textarea id="powerCommentInput" placeholder="Add your comment..."></textarea>
-                <button type="submit">Add Comment</button>
-            </form>
-        </section>
-    </main>
-    
-    <footer>
-        <p>&copy; 2024 Your Opinion</p>
-    </footer>
+  <section id="power">
+    <h2>Power</h2>
+    <p id="power-content"></p>
+    <div class="comments">
+      <h3>Comments</h3>
+      <textarea id="power-comment"></textarea>
+      <button onclick="addComment('power')">Add Comment</button>
+      <div id="power-comments"></div>
+    </div>
+    <button class="edit-button" onclick="editContent('power')">Edit</button>
+  </section>
 
-    <script>
-        // Load comments from localStorage on page load
-        window.onload = function() {
-            loadComments();
-        };
+  <script>
+    // Load content from localStorage
+    document.getElementById('studies-content').innerText = localStorage.getItem('studies-content') || '';
+    document.getElementById('philosophy-content').innerText = localStorage.getItem('philosophy-content') || '';
+    document.getElementById('money-content').innerText = localStorage.getItem('money-content') || '';
+    document.getElementById('power-content').innerText = localStorage.getItem('power-content') || '';
 
-        // Save comments to localStorage
-        function saveComments() {
-            localStorage.setItem('comments', JSON.stringify(comments));
+    // Load comments from localStorage
+    document.getElementById('studies-comments').innerHTML = localStorage.getItem('studies-comments') || '';
+    document.getElementById('philosophy-comments').innerHTML = localStorage.getItem('philosophy-comments') || '';
+    document.getElementById('money-comments').innerHTML = localStorage.getItem('money-comments') || '';
+    document.getElementById('power-comments').innerHTML = localStorage.getItem('power-comments') || '';
+
+    // Function to edit content
+    function editContent(sectionId) {
+      var password = prompt("Enter edit password:");
+      if (password === "6969") {
+        var newContent = prompt("Enter new content:");
+        if (newContent !== null) {
+          document.getElementById(sectionId + '-content').innerText = newContent;
+          // Save content to localStorage
+          localStorage.setItem(sectionId + '-content', newContent);
         }
+      } else {
+        alert("Incorrect password!");
+      }
+    }
 
-        // Load comments from localStorage
-        function loadComments() {
-            const savedComments = localStorage.getItem('comments');
-            if (savedComments) {
-                comments = JSON.parse(savedComments);
-                for (const sectionId in comments) {
-                    const sectionComments = comments[sectionId];
-                    displayComments(sectionId, sectionComments);
-                }
-            }
-        }
-
-        // Add a comment
-        function addComment(sectionId) {
-            const commentInput = document.getElementById(sectionId + 'CommentInput');
-            const commentText = commentInput.value.trim();
-            if (commentText !== '') {
-                if (!comments[sectionId]) {
-                    comments[sectionId] = [];
-                }
-                comments[sectionId].push(commentText);
-                displayComments(sectionId, [commentText]);
-                saveComments();
-                commentInput.value = '';
-            }
-        }
-
-        // Display comments for a section
-        function displayComments(sectionId, sectionComments) {
-            const commentsContainer = document.getElementById(sectionId + 'Comments');
-            commentsContainer.innerHTML = '<h3>Comments</h3>';
-            sectionComments.forEach(function(commentText) {
-                const commentDiv = document.createElement('div');
-                commentDiv.classList.add('comment');
-                commentDiv.innerHTML = '<p>' + commentText + '</p>';
-                commentsContainer.appendChild(commentDiv);
-            });
-        }
-
-        // Scroll to a section
-        function scrollToPart(partId) {
-            const part = document.getElementById(partId);
-            part.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Edit content of a section
-        function editContent(sectionId) {
-            const password = prompt('Please enter the password to edit:');
-            if (password === 'abcd6969') {
-                const content = prompt('Enter the new content:');
-                document.getElementById(sectionId + 'Content').innerText = content;
-            } else {
-                alert('Incorrect password. Access denied.');
-            }
-        }
-
-        let comments = {};
-    </script>
+    // Function to add comment
+    function addComment(sectionId) {
+      var comment = document.getElementById(sectionId + '-comment').value;
+      if (comment.trim() !== '') {
+        var commentDiv = document.createElement('div');
+        commentDiv.className = 'comment';
+        commentDiv.innerText = comment;
+        document.getElementById(sectionId + '-comments').appendChild(commentDiv);
+        // Save comment to localStorage
+        var comments = localStorage.getItem(sectionId + '-comments') || '';
+        comments += '<div class="comment">' + comment + '</div>';
+        localStorage.setItem(sectionId + '-comments', comments);
+        document.getElementById(sectionId + '-comment').value = ''; // Clear comment input
+      }
+    }
+  </script>
 </body>
 </html>
