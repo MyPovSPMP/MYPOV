@@ -54,7 +54,7 @@
       margin-bottom: 10px;
       border-radius: 5px;
     }
-    .edit-button, .add-comment-button {
+    .edit-button, .add-comment-button, .save-button, .cancel-button {
       background-color: #007bff;
       color: #fff;
       border: none;
@@ -63,16 +63,19 @@
       border-radius: 5px;
       transition: background-color 0.3s;
     }
-    .edit-button:hover, .add-comment-button:hover {
+    .edit-button:hover, .add-comment-button:hover, .save-button:hover, .cancel-button:hover {
       background-color: #0056b3;
     }
-    textarea {
+    textarea, .edit-area {
       width: 100%;
       padding: 10px;
       margin-top: 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
       resize: vertical;
+    }
+    .edit-area {
+      display: none;
     }
   </style>
 </head>
@@ -94,50 +97,65 @@
     </section>
     <section id="studies">
       <h2>Studies</h2>
-      <p id="studies-content"></p>
+      <p id="studies-content">This is the content for Studies section.</p>
+      <textarea class="edit-area" id="studies-edit-area"></textarea>
       <div class="comments">
         <h3>Comments</h3>
         <textarea id="studies-comment" placeholder="Add your comment"></textarea>
         <button class="add-comment-button" onclick="addComment('studies')">Add Comment</button>
         <div id="studies-comments"></div>
       </div>
-      <button class="edit-button" onclick="editContent('studies')">Edit</button>
+      <button class="edit-button" onclick="startEdit('studies')">Edit</button>
+      <button class="save-button" id="studies-save-button" onclick="saveEdit('studies')" style="display:none;">Save</button>
+      <button class="cancel-button" id="studies-cancel-button" onclick="cancelEdit('studies')" style="display:none;">Cancel</button>
     </section>
     <section id="philosophy">
       <h2>Philosophy</h2>
-      <p id="philosophy-content"></p>
+      <p id="philosophy-content">This is the content for Philosophy section.</p>
+      <textarea class="edit-area" id="philosophy-edit-area"></textarea>
       <div class="comments">
         <h3>Comments</h3>
         <textarea id="philosophy-comment" placeholder="Add your comment"></textarea>
         <button class="add-comment-button" onclick="addComment('philosophy')">Add Comment</button>
         <div id="philosophy-comments"></div>
       </div>
-      <button class="edit-button" onclick="editContent('philosophy')">Edit</button>
+      <button class="edit-button" onclick="startEdit('philosophy')">Edit</button>
+      <button class="save-button" id="philosophy-save-button" onclick="saveEdit('philosophy')" style="display:none;">Save</button>
+      <button class="cancel-button" id="philosophy-cancel-button" onclick="cancelEdit('philosophy')" style="display:none;">Cancel</button>
     </section>
     <section id="money">
       <h2>Money</h2>
-      <p id="money-content"></p>
+      <p id="money-content">This is the content for Money section.</p>
+      <textarea class="edit-area" id="money-edit-area"></textarea>
       <div class="comments">
         <h3>Comments</h3>
         <textarea id="money-comment" placeholder="Add your comment"></textarea>
         <button class="add-comment-button" onclick="addComment('money')">Add Comment</button>
         <div id="money-comments"></div>
       </div>
-      <button class="edit-button" onclick="editContent('money')">Edit</button>
+      <button class="edit-button" onclick="startEdit('money')">Edit</button>
+      <button class="save-button" id="money-save-button" onclick="saveEdit('money')" style="display:none;">Save</button>
+      <button class="cancel-button" id="money-cancel-button" onclick="cancelEdit('money')" style="display:none;">Cancel</button>
     </section>
     <section id="power">
       <h2>Power</h2>
-      <p id="power-content"></p>
+      <p id="power-content">This is the content for Power section.</p>
+      <textarea class="edit-area" id="power-edit-area"></textarea>
       <div class="comments">
         <h3>Comments</h3>
         <textarea id="power-comment" placeholder="Add your comment"></textarea>
         <button class="add-comment-button" onclick="addComment('power')">Add Comment</button>
         <div id="power-comments"></div>
       </div>
-      <button class="edit-button" onclick="editContent('power')">Edit</button>
+      <button class="edit-button" onclick="startEdit('power')">Edit</button>
+      <button class="edit-button" onclick="saveEdit('power')">Save</button>
+      <button class="save-button" id="power-save-button" onclick="saveEdit('power')" style="display:none;">Save</button>
+      <button class="cancel-button" id="power-cancel-button" onclick="cancelEdit('power')" style="display:none;">Cancel</button>
     </section>
   </main>
+
   <script>
+    // Function to show the appropriate section
     function showSection(sectionId) {
       const sections = document.querySelectorAll('section');
       sections.forEach(section => {
@@ -146,28 +164,56 @@
       document.getElementById(sectionId).classList.add('active');
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const sections = ['studies', 'philosophy', 'money', 'power'];
-
-      sections.forEach(section => {
-        document.getElementById(`${section}-content`).innerText = localStorage.getItem(`${section}-content`) || '';
-        document.getElementById(`${section}-comments`).innerHTML = localStorage.getItem(`${section}-comments`) || '';
-      });
-    });
-
-    function editContent(sectionId) {
-      const password = prompt("Enter edit password:");
-      if (password === "6969") {
-        const newContent = prompt("Enter new content:");
-        if (newContent !== null) {
-          document.getElementById(`${sectionId}-content`).innerText = newContent;
-          localStorage.setItem(`${sectionId}-content`, newContent);
-        }
+    // Function to start editing
+    function startEdit(sectionId) {
+      let password;
+      switch (sectionId) {
+        case 'studies':
+          password = "7173"; // Password for Studies section
+          break;
+        case 'philosophy':
+          password = "6969"; // Password for Philosophy section
+          break;
+        case 'money':
+          password = "senpai"; // Password for Money section
+          break;
+        case 'power':
+          password = "gojo"; // Password for Power section
+          break;
+        default:
+          password = ""; // Default password
+      }
+      
+      const enteredPassword = prompt("Enter edit password:");
+      if (enteredPassword === password) {
+        const content = document.getElementById(`${sectionId}-content`).innerText;
+        document.getElementById(`${sectionId}-edit-area`).value = content;
+        document.getElementById(`${sectionId}-content`).style.display = 'none';
+        document.getElementById(`${sectionId}-edit-area`).style.display = 'block';
+        document.getElementById(`${sectionId}-save-button`).style.display = 'inline-block';
+        document.getElementById(`${sectionId}-cancel-button`).style.display = 'inline-block';
       } else {
         alert("Incorrect password!");
       }
     }
 
+    // Function to save the edited content
+    function saveEdit(sectionId) {
+      const newContent = document.getElementById(`${sectionId}-edit-area`).value;
+      document.getElementById(`${sectionId}-content`).innerText = newContent;
+      localStorage.setItem(`${sectionId}-content`, newContent);
+      cancelEdit(sectionId);
+    }
+
+    // Function to cancel editing
+    function cancelEdit(sectionId) {
+      document.getElementById(`${sectionId}-content`).style.display = 'block';
+      document.getElementById(`${sectionId}-edit-area`).style.display = 'none';
+      document.getElementById(`${sectionId}-save-button`).style.display = 'none';
+      document.getElementById(`${sectionId}-cancel-button`).style.display = 'none';
+    }
+
+    // Function to add a comment
     function addComment(sectionId) {
       const comment = document.getElementById(`${sectionId}-comment`).value.trim();
       if (comment) {
@@ -180,6 +226,16 @@
         document.getElementById(`${sectionId}-comment`).value = '';
       }
     }
+
+    // Function to execute when the DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = ['studies', 'philosophy', 'money', 'power'];
+
+      sections.forEach(section => {
+        document.getElementById(`${section}-content`).innerText = localStorage.getItem(`${section}-content`) || '';
+        document.getElementById(`${section}-comments`).innerHTML = localStorage.getItem(`${section}-comments`) || '';
+      });
+    });
   </script>
 </body>
 </html>
